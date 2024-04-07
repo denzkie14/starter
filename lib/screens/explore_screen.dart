@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import '../components/components.dart';
 import '../components/today_recipe_list_view.dart';
@@ -18,20 +20,30 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   @override
   void initState() {
-    _controller = ScrollController();
-    _controller.addListener(_scrollListener);
     super.initState();
+    // 1
+    _controller = ScrollController();
+    // 2
+    _controller.addListener(_scrollListener);
   }
 
   void _scrollListener() {
+    // 1
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      debugPrint('i am at the bottom!');
+      log('i am at the bottom!');
     }
+    // 2
     if (_controller.offset <= _controller.position.minScrollExtent &&
         !_controller.position.outOfRange) {
-      debugPrint('i am at the top!');
+      log('i am at the top!');
     }
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_scrollListener);
+    super.dispose();
   }
 
   @override
